@@ -1,3 +1,4 @@
+
 import {Alltweets, UsersTweet, IDtweet, create, edit, remove}from "./tweetsData.js";
 
 export function getTweets(req, res, next) {
