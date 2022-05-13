@@ -1,7 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
-import {getTweets, getTweet, createTweet, editTweet, deleteTweet } from "./service/controller.js";
-import { validate, textLength3 } from './service/validatior.js';
+import {getTweets, getTweet, createTweet, editTweet, deleteTweet } from "./control/tweet.js";
+import { validate, textLength } from './validator/validatior.js';
 
 const router = express.Router();
 
@@ -13,10 +13,10 @@ router.get('/', getTweets);
 router.get('/:id',getTweet);
 
 // POST /tweeets
-router.post('/',[textLength3, validate], createTweet);
+router.post('/',[textLength, validate], createTweet);
 
 // PUT /tweets/:id
-router.put('/:id',[textLength3, validate], editTweet);
+router.put('/:id',[textLength, validate], editTweet);
 
 // DELETE /tweets/:id
 router.delete('/:id', deleteTweet);

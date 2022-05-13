@@ -1,5 +1,5 @@
 
-import {Alltweets, UsersTweet, IDtweet, create, edit, remove}from "./tweetsData.js";
+import {Alltweets, UsersTweet, IDtweet, create, edit, remove}from "../data/tweetsData.js";
 
 export function getTweets(req, res, next) {
     const username = req.query.username;

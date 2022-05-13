@@ -2,12 +2,24 @@ import express from 'express';
 import 'express-async-errors';
 import bcrypt from "bcrypt"
 import jsonwebtoken from 'jsonwebtoken';
+import { config } from '../config.js';
 
 const router = express.Router();
-
 function createJWT(email){
-    return jsonwebtoken.sign({email}, secretKey)
+    return jsonwebtoken.sign({email}, config.jwt.secretKey, {
+        expiresIn:config.jwt.expries
+    })
 }
+
+let userData=[
+    {
+        "email":"asd@asd.com",
+        "password":"asd123",
+        "name":"kate",
+        "username":"9999",
+        "url":"",
+    }];
+
 
 //토큰 유효성
 const isAuth=(req, res, next)=>{
@@ -18,7 +30,7 @@ const isAuth=(req, res, next)=>{
     }
     jsonwebtoken.verify(
         token,
-        secretKey,
+        config.jwt.secretKey,
         (error, decoded)=>{
             if(error){
                 return res.status(401)
@@ -36,16 +48,6 @@ const isAuth=(req, res, next)=>{
     return res.status(200)
 }
 
-const secretKey='secret';
-let userData=[
-    {
-        "email":"asd@asd.com",
-        "password":"asd123",
-        "name":"kate",
-        "username":"9999",
-        "url":"",
-    }];
-
  // http://localhost:8080/auth/signup   
 router.post('/signup',(req, res, next)=>{
     const {email, password, name, username, url}=req.body;
@@ -53,7 +55,7 @@ router.post('/signup',(req, res, next)=>{
     if(find){
         return res.status(409).json({message:"already sign up"})
     }
-    const hashed=bcrypt.hashSync(password, 12);    
+    const hashed=bcrypt.hashSync(password, config.bcrypt.saltRounds);    
     const newAccount={email, "password":hashed, name, username, url}
     userData.push(newAccount)
     res.status(201).json({message:"success"})
