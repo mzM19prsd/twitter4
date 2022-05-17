@@ -1,17 +1,21 @@
-import {MongoClient} from 'mongodb';
+
+import monguuse from 'mongoose'
 import {config} from '../config.js';
 
-let db;
 
 export const connectDB= () => {
-    return new MongoClient(config.db.host).connect().then((client)=> {
-        db=client.db()
-    })
+    return monguuse.connect(config.db.host)
 }
 
-export function getUsers(){
-    return db.collection('users');
+export function useVirtualId(schema){
+schema.virtual('id').get(function(){
+    return this._id.toString()
+})
+schema.set('toJson', {virtuals:true});
+schema.set('toObject', {virtuals:true});
 }
+
+let db;
 
 export function getTweets(){
     return db.collection('tweets')
