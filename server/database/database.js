@@ -14,9 +14,3 @@ schema.virtual('id').get(function(){
 schema.set('toJson', {virtuals:true});
 schema.set('toObject', {virtuals:true});
 }
-
-let db;
-
-export function getTweets(){
-    return db.collection('tweets')
-}

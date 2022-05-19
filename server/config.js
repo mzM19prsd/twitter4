@@ -14,5 +14,8 @@ export const config={
     },
     db:{
         host:process.env.DB_HOST
+    },
+    csrf:{
+        plaintoken:process.env.CSRF_SECRET_KEY
     }
 }
